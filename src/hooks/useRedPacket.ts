@@ -16,47 +16,21 @@ export interface RedPacket {
 }
 
 export function useRedPacket() {
-  const { data: writeData, writeContract, isPending: isWritePending, error: writeError } = useWriteContract()
+  const { writeContract, isPending: isWritePending, error: writeError } = useWriteContract()
   const [packets, setPackets] = useState<RedPacket[]>([])
   const [isLoadingPackets, setIsLoadingPackets] = useState(false)
 
   const { address } = useAccount()
 
-  // 读取当前红包ID
-  const {
-    data: packetId,
-    isLoading: isPacketIdLoading,
-    refetch: refetchPacketId
-  } = useReadContract({
-    abi: RedPacketABI,
-    address: contractAddress as `0x${string}`,
-    functionName: 'packetId',
-  })
-
-  // 读取合约余额
-  const {
-    data: balanceData,
-    isLoading: isBalanceLoading,
-    refetch: refetchBalance
-  } = useReadContract({
-    abi: RedPacketABI,
-    address: contractAddress as `0x${string}`,
-    functionName: 'getBalance',
-  })
-
   // 读取红包列表
   const {
     data: packetsData,
-    isLoading: isPacketsLoading,
     refetch: refetchPackets
   } = useReadContract({
     abi: RedPacketABI,
     address: contractAddress as `0x${string}`,
     functionName: 'getPackets'
   })
-
-  // 格式化余额
-  const balance = balanceData ? formatEther(balanceData as bigint) : undefined
 
   // 创建红包
   const createPacket = async (amount: string, count: string) => {
@@ -74,8 +48,6 @@ export function useRedPacket() {
       })
 
       // 刷新数据
-      refetchPacketId()
-      refetchBalance()
       fetchPacketsList()
 
       return true
@@ -97,8 +69,7 @@ export function useRedPacket() {
         args: [BigInt(packetId)],
       })
 
-      // 刷新余额和红包列表
-      refetchBalance()
+      // 刷新红包列表
       fetchPacketsList()
 
       return true
@@ -152,17 +123,12 @@ export function useRedPacket() {
   }, [packetsData, address, refetchPackets])
 
   return {
-    packetId: packetId ? packetId.toString() : undefined,
-    balance,
     packets,
-    isLoading: isPacketIdLoading || isBalanceLoading,
     isLoadingPackets,
     isPending: isWritePending,
     error: writeError,
     createPacket,
     claimPacket,
     fetchPacketsList,
-    refetchPacketId,
-    refetchBalance,
   }
 } 
