@@ -63,6 +63,11 @@ export const RedPacketABI = [
         "internalType": "uint256",
         "name": "count",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "total",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -138,6 +143,11 @@ export const RedPacketABI = [
           },
           {
             "internalType": "uint256",
+            "name": "total",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "id",
             "type": "uint256"
           }
@@ -154,4 +164,4 @@ export const RedPacketABI = [
 ];
 
 // 合约地址
-export const contractAddress = "0xB91B326370CCdd75bFD4bb023d5f47080eEf38FA"; 
+export const contractAddress = "0x351d4B87577f2b4AdaBf718B6abE100a94064329"; 

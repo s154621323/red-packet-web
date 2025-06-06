@@ -133,7 +133,7 @@ export function useRedPacket() {
           id: packet.id.toString(),
           creator: packet.creator,
           amount: formatEther(packet.amount),
-          count: packet.count.toString(),
+          count: packet.total.toString(),
           remainingCount: packet.count.toString(),
           claimed: claimStatusList[idx] as boolean
         }))

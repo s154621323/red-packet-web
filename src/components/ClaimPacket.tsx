@@ -12,7 +12,6 @@ export function ClaimPacket({ onSubmit, packets = [], isLoading = false }: Claim
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleClaim = (packet: RedPacket) => {
-    debugger
     if (packet.claimed || packet.remainingCount === '0') return;
 
     setSelectedPacket(packet);
